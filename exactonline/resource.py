@@ -23,9 +23,10 @@ class _Resource(object):
         r2 = r.update(resource=('v1/' + r.resource))
 
     """
-    def __init__(self, resource, data=None):
+    def __init__(self, resource, data=None, language=None):
         self._resource = resource  # or "path" or "full url"
         self._data = data
+        self._language = language
 
     def __repr__(self):
         return '%s(%r, %r)' % (self.method, self.resource, self.data)
@@ -42,10 +43,14 @@ class _Resource(object):
     def data(self):
         return self._data
 
+    @property
+    def language(self):
+        return self._language
+
     def update(self, **kwargs):
         new_data = dict(**kwargs)
 
-        for prop in ('data', 'resource'):
+        for prop in ('data', 'resource', 'language'):
             if prop not in new_data:
                 new_data[prop] = getattr(self, prop)
 

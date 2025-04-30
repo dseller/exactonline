@@ -256,6 +256,11 @@ class ExactRawApi(object):
         }
         if request.method in ('POST', 'PUT'):
             opt_custom.headers.update({'Content-Type': 'application/json'})
+        if request.language:
+            # Allow caller to set a language when retrieving e.g. GLAccounts that can be presented in different languages.
+            # See Exact API reference for more information regarding this header.
+            opt_custom.headers.update({"CustomDescriptionLanguage": request.language})
+
         opt = (opt_secure | opt_custom)
 
         try:
